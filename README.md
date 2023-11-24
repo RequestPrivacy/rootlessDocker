@@ -49,11 +49,11 @@ Sorry for destroying your worldview. But now that I have your undevided attentio
 
 ## Rootfull docker
 
-By adding the user to the docker group you made the user effectifely a root account on the system. You know what a red flag means, don't you? So why did you skip [this box]([Linux post-installation steps for Docker Engine | Docker Docs](https://docs.docker.com/engine/install/linux-postinstall/#manage-docker-as-a-non-root-user)) during installation or writing the howto guide?
+By adding the user to the docker group you made the user effectifely a root account on the system. You know what a red flag means, don't you? So why did you skip [this box](https://docs.docker.com/engine/install/linux-postinstall/#manage-docker-as-a-non-root-user) during installation or writing the howto guide?
 
 ![](assets/pictures/docker_warning.png)
 
-This has serious implications as also [stated]([Docker security | Docker Docs](https://docs.docker.com/engine/security/#docker-daemon-attack-surface)) by Docker. Just one issue amongst many:
+This has serious implications as also [stated](https://docs.docker.com/engine/security/#docker-daemon-attack-surface) by Docker. Just one issue amongst many:
 
 > This means that you can start a container where the `/host` directory is the `/` directory on your host; and the container can alter your host filesystem without any restriction.
 
@@ -107,7 +107,7 @@ But maybe you want to update your guide to rootless docker?
 
 #### Install
 
-After Red Hat made rootless Podman as an alternative to rootfull docker, Docker needed to up its game and has provided us with a mode called "Rootless mode/docker". The install is prett [easy]([Run the Docker daemon as a non-root user (Rootless mode) | Docker Docs](https://docs.docker.com/engine/security/rootless/)) but can vary a bit accross distros. Check out the guide!
+After Red Hat made rootless Podman as an alternative to rootfull docker, Docker needed to up its game and has provided us with a mode called "Rootless mode/docker". The install is prett [easy](https://docs.docker.com/engine/security/rootless/) but can vary a bit accross distros. Check out the guide!
 
 For an out of the box Ubuntu Server 22.04.3 LTS it consists of the following steps:
 
@@ -175,7 +175,7 @@ What you should know rn is that with the above setup you have a rootless docker 
 
 Containers are in reality namespaces. And as such a namsepace in your container can be mapped to the namespace of the host. That's bad if root in the container is the same as root outside of the container (i.e. the host). This [medium post](https://medium.com/@mccode/understanding-how-uid-and-gid-work-in-docker-containers-c37a01d01cf) explains this pretty well.
 
-Containers started by rootless docker use the [namespace]([Isolate containers with a user namespace | Docker Docs](https://docs.docker.com/engine/security/userns-remap/)) of the <u>user</u> in which docker is run. Think of child users of the unprivileged user you created:
+Containers started by rootless docker use the [namespace](https://docs.docker.com/engine/security/userns-remap/) of the <u>user</u> in which docker is run. Think of child users of the unprivileged user you created:
 
 ```bash
 id -u
@@ -196,7 +196,7 @@ What this means is, that `root` in the container is root-like only for all thing
 
 But the important part: this doesn't apply to the host! For the host each and every user in the container, even its `root` user, is just `rootlessdockeruser` or one of its subusers, with all of the limitations applied to `rootlessdockeruser`.
 
-A more technical walkthrough can be found in [Overview of Rootless Podman: Part 1 - Understanding Root Inside and Outside a Container]([Overview of Rootless Podman: Part 1 - Understanding Root Inside and Outside a Container - YouTube](https://www.youtube.com/watch?v=ZgXpWKgQclc)[Overview of Rootless Podman: Part 1 - Understanding Root Inside and Outside a Container - YouTube](https://www.youtube.com/watch?v=ZgXpWKgQclc)) and [Overview of Rootless Podman: Part 2 - How User Namespaces Work in Rootless Containers]([Overview of Rootless Podman: Part 2 - How User Namespaces Work in Rootless Containers - YouTube](https://www.youtube.com/watch?v=Ac2boGEz2ww)). Although it's for Podman it works the same for docker. Go watch the videos!
+A more technical walkthrough can be found in [Overview of Rootless Podman: Part 1 - Understanding Root Inside and Outside a Container - YouTube](https://www.youtube.com/watch?v=ZgXpWKgQclc) and [Overview of Rootless Podman: Part 2 - How User Namespaces Work in Rootless Containers - YouTube](https://www.youtube.com/watch?v=Ac2boGEz2ww). Although it's for Podman it works the same for docker. Go watch the videos!
 
 #### Working with rootless mode
 
@@ -204,7 +204,7 @@ There are limitations of course. Not really from the docker side. I can't imagin
 
 > This means that in most cases, containers do not need "real" root privileges *at all*.
 
-If the [docker guys]([Docker security | Docker Docs](https://docs.docker.com/engine/security/#linux-kernel-capabilities)) say this but your project needs real root access maybe you're doing something wrong?
+If the [docker guys](https://docs.docker.com/engine/security/#linux-kernel-capabilities) say this but your project needs real root access maybe you're doing something wrong?
 
 Right now I see 3 pain points for adoption which must be properly managed by developers or should be investigated first by users in the case that containers don't seem to run in rootless mode:
 
